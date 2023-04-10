@@ -7,7 +7,7 @@
 //     congratulations(int x);
 
 //     return 0;
-// }
+// }  мы лучшие  
 
 
 void congratulations(int x){
