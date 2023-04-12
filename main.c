@@ -2,10 +2,6 @@
 void view_board(int array[10][10]);
 int main(void) {
 	int array[10][10];
-	view_board(array);
-	return 0;
-}
-	void view_board(int array[][10]){
 	array[1][1] = 0;
 	array[1][2] = 3;
 	array[1][3] = 1;
@@ -31,6 +27,12 @@ int main(void) {
 	array[5][3] = 1;
 	array[5][4] = 3;
 	array[5][5] = 1;
+	
+	view_board(array);
+	return 0;
+}
+	void view_board(int array[][10]){
+
 
 	int i;
     	int j;
