@@ -4,14 +4,18 @@
 #define N 3
 
 int check_winner(int arr[N][N]);
-void view_board(int array[10][10]);
+void view_board(int array[N][N]);
 int read_player_command(int arr[3][3]);
 void congratulations(int x);
 
 int main() {
     int arr[N][N] = {0};
-    arr[0][2] = 2; arr[1][1] = 2; arr[2][0] = 2;
-    printf("%d", check_winner(arr));
+    while (check_winner(arr) == 0) {
+        view_board(arr);
+        while (read_player_command(arr) == 1){}
+        
+    }
+    congratulations(check_winner(arr));
 }
 
 int check_winner(int arr[N][N]) {
@@ -43,7 +47,7 @@ int check_winner(int arr[N][N]) {
     return res;
 }
 
-void view_board(int array[][10]){
+void view_board(int array[N][N]){
 
 	int i;
     	int j;
@@ -66,17 +70,18 @@ void view_board(int array[][10]){
        
 	
    	 }
+}
 
 int read_player_command(int arr[3][3]) {
-    printf("РҐРѕРґ РёРіСЂРѕРєР° 1В» В«Р’РІРµРґРёС‚Рµ РєРѕРѕСЂРґРёРЅР°С‚Сѓ РҐ");
+    printf("Ход игрока 1» «Введите координату Х");
     int x, y, x2, y2, z;
     int error_check = 0;
     int a = scanf("%d.%d", &x, &z);
-    printf("Р’РІРµРґРёС‚Рµ РєРѕРѕСЂРґРёРЅР°С‚Сѓ Y");
+    printf("Введите координату Y");
     int b = scanf("%d.%d", &y, &z);
-    printf("РҐРѕРґ РёРіСЂРѕРєР° 2В» В«Р’РІРµРґРёС‚Рµ РєРѕРѕСЂРґРёРЅР°С‚Сѓ РҐ");
+    printf("Ход игрока 2» «Введите координату Х");
     int c = scanf("%d.%d", &x2, &z);
-    printf("Р’РІРµРґРёС‚Рµ РєРѕРѕСЂРґРёРЅР°С‚Сѓ Y");
+    printf("Введите координату Y");
     int d = scanf("%d.%d", &y2, &z);
     if (a != 1 || b != 1 || c != 1 || d != 1) {
         error_check = 1;
@@ -85,14 +90,15 @@ int read_player_command(int arr[3][3]) {
         arr[x2][y2] = 2;
     }
     return error_check;
+}
 
 
 void congratulations(int x){
     if (x == 1) {
-        printf("РљРѕРЅРµС† РёРіСЂС‹! РџРѕР±РµРґРёР» РёРіСЂРѕРє 1");
+        printf("Конец игры! Победил игрок 1");
     } else if(x == 2) {
-        printf("РљРѕРЅРµС† РёРіСЂС‹! РџРѕР±РµРґРёР» РёРіСЂРѕРє 2");
+        printf("Конец игры! Победил игрок 2");
     } else {
-        printf("РџРѕР±РµРґРёС‚РµР»РµР№ РЅРµС‚")
+        printf("Победителей нет");
     }
 }
