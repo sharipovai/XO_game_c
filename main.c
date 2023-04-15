@@ -4,6 +4,7 @@
 #define N 3
 
 int check_winner(int arr[N][N]);
+void view_board(int array[10][10]);
 
 int main() {
     int arr[N][N] = {0};
@@ -38,4 +39,30 @@ int check_winner(int arr[N][N]) {
         res = 2;
     }
     return res;
+}
+
+void view_board(int array[][10]){
+
+	int i;
+    	int j;
+    	for (j = 1; j < 4; j++) {
+
+        	for (i = 1; i < 4; i++) {
+            	if (array[j][i] == 1)
+               		printf("X");
+		if (array[j][i] == 2)
+                	printf("0");
+
+
+		if(array[j][i] == 0)
+			printf(" ");
+		if (i != 3)
+			printf("|");
+        	}
+		if (j != 3)
+			printf("\n-----\n");
+       
+	
+   	 }
+
 }
