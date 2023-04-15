@@ -1,5 +1,6 @@
 #include <math.h>
 #include <stdio.h>
+#include <locale.h>
 
 #define N 3
 
@@ -9,6 +10,7 @@ int read_player_command(int arr[3][3]);
 void congratulations(int x);
 
 int main() {
+    setlocale(LC_CTYPE,"Russian_Russia.1251");
     int arr[N][N] = {0};
     while (check_winner(arr) == 0) {
         view_board(arr);
@@ -72,16 +74,16 @@ void view_board(int array[N][N]){
    	 }
 }
 
-int read_player_command(int arr[3][3]) {
-    printf("Ход игрока 1» «Введите координату Х");
+int read_player_command(int arr[N][N]) {
+    printf("РҐРѕРґ РёРіСЂРѕРєР° 1В» В«Р’РІРµРґРёС‚Рµ РєРѕРѕСЂРґРёРЅР°С‚Сѓ РҐ\n");
     int x, y, x2, y2, z;
     int error_check = 0;
     int a = scanf("%d.%d", &x, &z);
-    printf("Введите координату Y");
+    printf("Р’РІРµРґРёС‚Рµ РєРѕРѕСЂРґРёРЅР°С‚Сѓ Y\n");
     int b = scanf("%d.%d", &y, &z);
-    printf("Ход игрока 2» «Введите координату Х");
+    printf("РҐРѕРґ РёРіСЂРѕРєР° 2В» В«Р’РІРµРґРёС‚Рµ РєРѕРѕСЂРґРёРЅР°С‚Сѓ РҐ\n");
     int c = scanf("%d.%d", &x2, &z);
-    printf("Введите координату Y");
+    printf("Р’РІРµРґРёС‚Рµ РєРѕРѕСЂРґРёРЅР°С‚Сѓ Y\n");
     int d = scanf("%d.%d", &y2, &z);
     if (a != 1 || b != 1 || c != 1 || d != 1) {
         error_check = 1;
@@ -92,13 +94,12 @@ int read_player_command(int arr[3][3]) {
     return error_check;
 }
 
-
 void congratulations(int x){
     if (x == 1) {
-        printf("Конец игры! Победил игрок 1");
+        printf("ГЉГ®Г­ГҐГ¶ ГЁГЈГ°Г»! ГЏГ®ГЎГҐГ¤ГЁГ« ГЁГЈГ°Г®ГЄ 1");
     } else if(x == 2) {
-        printf("Конец игры! Победил игрок 2");
+        printf("ГЉГ®Г­ГҐГ¶ ГЁГЈГ°Г»! ГЏГ®ГЎГҐГ¤ГЁГ« ГЁГЈГ°Г®ГЄ 2");
     } else {
-        printf("Победителей нет");
+        printf("ГЏГ®ГЎГҐГ¤ГЁГІГҐГ«ГҐГ© Г­ГҐГІ");
     }
 }
