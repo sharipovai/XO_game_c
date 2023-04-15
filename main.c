@@ -5,6 +5,8 @@
 
 int check_winner(int arr[N][N]);
 void view_board(int array[10][10]);
+int read_player_command(int arr[3][3]);
+void congratulations(int x);
 
 int main() {
     int arr[N][N] = {0};
@@ -83,4 +85,14 @@ int read_player_command(int arr[3][3]) {
         arr[x2][y2] = 2;
     }
     return error_check;
+
+
+void congratulations(int x){
+    if (x == 1) {
+        printf("Конец игры! Победил игрок 1");
+    } else if(x == 2) {
+        printf("Конец игры! Победил игрок 2");
+    } else {
+        printf("Победителей нет")
+    }
 }
