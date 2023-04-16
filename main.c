@@ -6,17 +6,19 @@
 
 int check_winner(int arr[N][N]);
 void view_board(int array[N][N]);
-int read_player_command(int arr[3][3]);
+void read_player_command(int arr[N][N], int player_id);
 void congratulations(int x);
 
 int main() {
-    setlocale(LC_CTYPE,"Russian_Russia.1251");
     int arr[N][N] = {0};
+    int player_id = 0;
     while (check_winner(arr) == 0) {
         view_board(arr);
-        while (read_player_command(arr) == 1){}
+        read_player_command(arr, player_id % 2 + 1);
+        player_id++;
         
     }
+    view_board(arr);
     congratulations(check_winner(arr));
 }
 
@@ -50,56 +52,44 @@ int check_winner(int arr[N][N]) {
 }
 
 void view_board(int array[N][N]){
-
-	int i;
-    	int j;
-    	for (j = 1; j < 4; j++) {
-
-        	for (i = 1; i < 4; i++) {
-            	if (array[j][i] == 1)
-               		printf("X");
-		if (array[j][i] == 2)
-                	printf("0");
-
-
-		if(array[j][i] == 0)
-			printf(" ");
-		if (i != 3)
-			printf("|");
-        	}
-		if (j != 3)
-			printf("\n-----\n");
-       
-	
-   	 }
+    for (int j = 0; j < N; j++) {
+        for (int i = 0; i < N; i++) {
+            if (array[j][i] == 1)
+               	printf("X");
+		    if (array[j][i] == 2)
+                printf("0");
+		    if(array[j][i] == 0)
+			    printf(" ");
+		    if (i != 2)
+			    printf("|");
+        }
+	if (j != 2)
+	    printf("\n-----\n");
+    }
+    printf("\n");
 }
 
-int read_player_command(int arr[N][N]) {
-    printf("Ход игрока 1» «Введите координату Х\n");
-    int x, y, x2, y2, z;
-    int error_check = 0;
-    int a = scanf("%d.%d", &x, &z);
-    printf("Введите координату Y\n");
-    int b = scanf("%d.%d", &y, &z);
-    printf("Ход игрока 2» «Введите координату Х\n");
-    int c = scanf("%d.%d", &x2, &z);
-    printf("Введите координату Y\n");
-    int d = scanf("%d.%d", &y2, &z);
-    if (a != 1 || b != 1 || c != 1 || d != 1) {
-        error_check = 1;
-    } else {
-        arr[x][y] = 1;
-        arr[x2][y2] = 2;
-    }
-    return error_check;
+void read_player_command(int arr[N][N], int player_id) {
+    int x, y, z, a;
+    do {
+        printf("Player %d's move\n", player_id);
+        do {
+            printf("Enter X coordinate\n");
+            a = scanf("%d.%d", &x, &z);
+        } while (a != 1 || x < 0 || x > 2);
+        do {
+            printf("Enter Y coordinate\n");
+            a = scanf("%d.%d", &y, &z);
+        } while (a != 1 || y < 0 || y > 2);
+        if (arr[y][x] != 0) {
+            printf("This X Y coordinate is already taken!\n");
+            view_board(arr);
+        }
+    } while (arr[y][x] != 0);
+    arr[y][x] = player_id;
 }
 
 void congratulations(int x){
-    if (x == 1) {
-        printf("Êîíåö èãðû! Ïîáåäèë èãðîê 1");
-    } else if(x == 2) {
-        printf("Êîíåö èãðû! Ïîáåäèë èãðîê 2");
-    } else {
-        printf("Ïîáåäèòåëåé íåò");
-    }
+    printf("Congratulations! Player %d is win!\n", x);
+
 }
