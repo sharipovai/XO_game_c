@@ -25,8 +25,6 @@ void computer_move(int arr[N][N]) {
     int x = 0; int y = 0;                                            // Координаты пустой ячейки
     int mult_1 = 1, mult_2 = 1;                                   // Произведение элементов массива
     int mult_3 = 1, mult_4 = 1;                                    // Произведение элементов массива
-
-
     for (int i = 0; i < N; i++) {
         mult_1 = 1, mult_2 = 1;
         for (int j = 0; j < N; j++) { 
