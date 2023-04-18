@@ -7,6 +7,7 @@ void view_board(int array[N][N]);
 
 int main() {
     int arr[N][N] = {0};
+    view_board(arr);
     arr[0][0] = 1;
     arr[1][0] = 1;
     arr[2][0] = 2;
@@ -17,78 +18,54 @@ int main() {
 }
 
 void computer_move(int arr[N][N]) { 
-    double new[N][N];                             // Создаем массив, в который записываем вес приоритетности каждого символа
+    int weight[3] = {2, -5, 7};                             // Создаем массив, в который записываем вес приоритетности каждого символа
+    int priority = -100;                                        // Приоритет решения
+    int tmp_x1 = 0, tmp_x2 = 0, tmp_y1 = 0, tmp_y2 = 0; 
+    int tmp_x3 = 0, tmp_x4 = 0, tmp_y3 = 0, tmp_y4 = 0; 
+    int x = 0; int y = 0;                                            // Координаты пустой ячейки
+    int mult_1 = 1, mult_2 = 1;                                   // Произведение элементов массива
+    int mult_3 = 1, mult_4 = 1;                                    // Произведение элементов массива
+
+
     for (int i = 0; i < N; i++) {
-        for (int j = 0; j < N; j++) {
-            if(arr[i][j] == 0) new[i][j] = 0.1;
-            if(arr[i][j] == 1) new[i][j] = -0.5;
-            if(arr[i][j] == 2) new[i][j] = 0.7;
-        }
-    }
-
-    double priority = -0.035;                     // Приоритет решения
-    int a = 0; int b = 0; 
-    int x = 0; int y = 0;                         // Координаты пустой ячейки
-    double mult = 1;                              // Произведение элементов массива
-    int check_zero = 0;                           // Счетчик проверки, что есть пустая ячейка
-
-    for (int i = 0; i < N; i++) {                 // Считаем для строк
-        check_zero = 0; mult = 1;
+        mult_1 = 1, mult_2 = 1;
         for (int j = 0; j < N; j++) { 
-            mult *= new[i][j];                   
-            if(new[i][j] == 0.1) {
-                check_zero++;
-                a = i; b = j;
+            mult_1 *= weight[arr[i][j]];            //Считаем для строк
+            mult_2 *= weight[arr[j][i]]; 	    //Считаем для столбцов 
+            if(arr[i][j] == 0) {
+                tmp_x1 = j; tmp_y1 = i;
             }
-        }
-        if(check_zero != 0 && mult >= priority) {
-            priority = mult;
-            x = a; y = b;
-        }
-    } 
-    
-    for (int j = 0; j < N; j++) {                 // Считаем для столбцов  
-        check_zero = 0; mult = 1;                   
-        for (int i = 0; i < N; i++) {  
-            mult *= new[i][j];                   
-            if(new[i][j] == 0.1) {
-                check_zero++;
-                a = i; b = j;
+            if(arr[j][i] == 0) {
+                tmp_x2 = i; tmp_y2 = j;
             }
+	}
+        if ((mult_1 >= priority) && (mult_1 % weight[0] == 0)) {
+            priority = mult_1;
+            x = tmp_x1; y = tmp_y1;
         }
-        if(check_zero != 0 && mult >= priority) {
-            priority = mult;
-            x = a; y = b;
+        if ((mult_2 >= priority) && (mult_2 % weight[0] == 0)) {
+            priority = mult_2;
+            x = tmp_x2; y = tmp_y2;
+        } 
+        mult_3 *= weight[arr[i][i]];            //Считаем для первой диагонали
+        mult_4 *= weight[arr[i][N - i - 1]]; 	//Считаем для второй диагонали 
+        if(arr[i][i] == 0) {
+            tmp_x3 = i; tmp_y3 = i;
         }
-    }
-    check_zero = 0; mult = 1; 
-    for (int i = 0; i < N; i++) {                 // Считаем для первой диагонали 
-        mult *= new[i][i];
-        if(new[i][i] == 0.1) {
-            check_zero++;
-            a = i; b = i;
-        }
-    }
-    if(check_zero != 0 && mult >= priority) {
-        priority = mult;
-        x = a; y = b;
-    }
-    check_zero = 0; mult = 1; 
-    for (int i = 0; i < N; i++) {                 // Считаем для второй диагонали 
-        mult *= new[i][N - i - 1];
-        if(new[i][N - i - 1] == 0.1) {
-            check_zero++;
-            a = i; b = N - i - 1;
+        if(arr[i][N -i - 1] == 0) {
+            tmp_x4 = N - i - 1; tmp_y4 = i;
         }
     }
-    if(check_zero != 0 && mult >= priority) {
-        priority = mult;
-        x = a; y = b;
+    if ((mult_3 >= priority) && (mult_3 % weight[0] == 0)) {
+        priority = mult_3;
+        x = tmp_x3; y = tmp_y3;
+    }
+    if ((mult_4 >= priority) && (mult_4 % weight[0] == 0)) {
+        priority = mult_4;
+        x = tmp_x4; y = tmp_y4;
     }
 
-    arr[x][y] = 2;                                // Осуществляем ход компьютера!
-    //printf("%lf\n", priority);
-    //printf("%d %d\n", x, y);
+    arr[y][x] = 2;                                // Осуществляем ход компьютера!
 }
 
 void view_board(int array[N][N]){
