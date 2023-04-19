@@ -72,15 +72,20 @@ void view_board(int array[N][N]){
 
 void read_player_command(int arr[N][N], int player_id) {
     int x, y, z, a;
+    char ch[100];
     do {
         printf("Player %d's move\n", player_id);
         do {
             printf("Enter X coordinate\n");
             a = scanf("%d.%d", &x, &z);
+            fgets(ch, 100, stdin);
+            rewind(stdin);
         } while (a != 1 || x < 0 || x > 2);
         do {
             printf("Enter Y coordinate\n");
             a = scanf("%d.%d", &y, &z);
+            fgets(ch, 100, stdin);
+            rewind(stdin);
         } while (a != 1 || y < 0 || y > 2);
         if (arr[y][x] != 0) {
             printf("This X Y coordinate is already taken!\n");
