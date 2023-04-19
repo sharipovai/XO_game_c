@@ -8,15 +8,33 @@ int check_winner(int arr[N][N]);
 void view_board(int array[N][N]);
 void read_player_command(int arr[N][N], int player_id);
 void congratulations(int x);
-void computer_move(int arr[N][N]) {
- 
+void computer_move(int arr[N][N]);
+void play(int arr[N][N], int play_id);
+    
 int main() {
+    int play_id = 0, a, x;    
     int arr[N][N] = {0};
+    char ch[100];
+    do {
+        printf("Choose game mode: 1 - with human, 2 - with computer\n");
+        a = scanf("%d.%d", &play_id, &x);
+        fgets(ch, 100, stdin);
+        rewind(stdin);
+    } while (a != 1 || play_id < 1 || play_id > 2);
+    play(arr, play_id);
+}
+
+void play(int arr[N][N], int play_id) {
     int player_id = 0;
     while (check_winner(arr) == 0) {
         view_board(arr);
-        read_player_command(arr, player_id % 2 + 1);
-        player_id++;
+	if (play_id == 2 && player_id % 2 + 1 == 2) {
+	    printf("Computer move\n");
+	    computer_move(arr);
+	} else {
+            read_player_command(arr, player_id % 2 + 1);
+	}
+	player_id++;
         
     }
     view_board(arr);
