@@ -6,22 +6,27 @@
 
 int check_winner(int arr[N][N]);
 void view_board(int array[N][N]);
-void read_player_command(int arr[N][N], int player_id);
+int read_player_command(int arr[N][N], int player_id);
 void congratulations(int x);
 void computer_move(int arr[N][N]);
 void play(int arr[N][N], int play_id);
     
 int main() {
-    int play_id = 0, a, x;    
+    int play_id = 0;
     int arr[N][N] = {0};
     char ch[100];
     do {
+	printf("Enter 'q' to exit\n");
         printf("Choose game mode: 1 - with human, 2 - with computer\n");
-        a = scanf("%d.%d", &play_id, &x);
-        fgets(ch, 100, stdin);
+       	fgets(ch, 100, stdin);
         rewind(stdin);
-    } while (a != 1 || play_id < 1 || play_id > 2);
-    play(arr, play_id);
+    } while ((ch[0] > '2' || ch[0] < '1' || ch[1] != '\n') && (ch[0] != 'q' || ch[1] != '\n'));
+    if (ch[0] != 'q') {
+	play_id = ch[0] - '0';
+        play(arr, play_id);
+    } else {
+        printf("THE END!\n");
+    }
 }
 void play(int arr[N][N], int play_id) {
     int player_id = 0;
@@ -33,11 +38,11 @@ void play(int arr[N][N], int play_id) {
             printf("Computer move\n");
             computer_move(arr);
         } else {
-            read_player_command(arr, player_id % 2 + 1);
+            if (read_player_command(arr, player_id % 2 + 1) == 1) {
+	        break;
+	    }
         }
         player_id++;
-
-
     }
     view_board(arr);
     congratulations(check_winner(arr));
@@ -90,29 +95,43 @@ void view_board(int array[N][N]){
     printf("\n");
 }
 
-void read_player_command(int arr[N][N], int player_id) {
-    int x, y, z, a;
+int read_player_command(int arr[N][N], int player_id) {
+    int x, y;
+    int exit = 0;
     char ch[100];
     do {
         printf("Player %d's move\n", player_id);
         do {
             printf("Enter X coordinate\n");
-            a = scanf("%d.%d", &x, &z);
             fgets(ch, 100, stdin);
             rewind(stdin);
-        } while (a != 1 || x < 0 || x > 2);
+        } while ((ch[0] > '2' || ch[0] < '0' || ch[1] != '\n') && (ch[0] != 'q' || ch[1] != '\n'));
+        if (ch[0] != 'q') {
+	    x = ch[0] - '0';
+	} else {
+	    break;
+	}
         do {
             printf("Enter Y coordinate\n");
-            a = scanf("%d.%d", &y, &z);
             fgets(ch, 100, stdin);
             rewind(stdin);
-        } while (a != 1 || y < 0 || y > 2);
+        } while ((ch[0] > '2' || ch[0] < '0' || ch[1] != '\n') && (ch[0] != 'q' || ch[1] != '\n'));
+        if (ch[0] != 'q') {
+	    y = ch[0] - '0';
+	} else {
+	    break;
+	}
         if (arr[y][x] != 0) {
             printf("This X Y coordinate is already taken!\n");
             view_board(arr);
         }
     } while (arr[y][x] != 0);
-    arr[y][x] = player_id;
+    if (ch[0] == 'q') {
+        exit = 1;
+    } else {
+        arr[y][x] = player_id;
+    }
+    return exit;
 }
 void congratulations(int x){
     if (x == 0)
