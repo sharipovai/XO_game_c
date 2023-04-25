@@ -135,7 +135,7 @@ int read_player_command(int arr[N][N], int player_id) {
 }
 void congratulations(int x){
     if (x == 0)
-        printf("Dead heat! Nobody is not win\n");
+        printf("Stalemate! Nobody won!\n");
     else
         printf("Congratulations! Player %d is win!\n", x);
 }
