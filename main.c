@@ -23,19 +23,21 @@ int main() {
     } while (a != 1 || play_id < 1 || play_id > 2);
     play(arr, play_id);
 }
-
 void play(int arr[N][N], int play_id) {
     int player_id = 0;
-    while (check_winner(arr) == 0) {
+    int count = 0;
+    while ((check_winner(arr) == 0) && (count != N*N)){
+        count++;
         view_board(arr);
-	if (play_id == 2 && player_id % 2 + 1 == 2) {
-	    printf("Computer move\n");
-	    computer_move(arr);
-	} else {
+        if (play_id == 2 && player_id % 2 + 1 == 2) {
+            printf("Computer move\n");
+            computer_move(arr);
+        } else {
             read_player_command(arr, player_id % 2 + 1);
-	}
-	player_id++;
-        
+        }
+        player_id++;
+
+
     }
     view_board(arr);
     congratulations(check_winner(arr));
@@ -112,11 +114,13 @@ void read_player_command(int arr[N][N], int player_id) {
     } while (arr[y][x] != 0);
     arr[y][x] = player_id;
 }
-
 void congratulations(int x){
-    printf("Congratulations! Player %d is win!\n", x);
-
+    if (x == 0)
+        printf("Dead heat! Nobody is not win\n");
+    else
+        printf("Congratulations! Player %d is win!\n", x);
 }
+
 void computer_move(int arr[N][N]) {
     int weight[3] = {2, -5, 7};                             // Создаем массив, в который записываем вес приоритетности каждого символа
     int priority = -100;                                        // Приоритет решения
